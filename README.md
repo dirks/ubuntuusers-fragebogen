@@ -9,7 +9,8 @@ Analysis requires R with the packages
 - dplyr
 - ggthemes
 - lubridate
+- tidyr
 
 ```R
-install.packages( "ggplot2", "dplyr", "ggthemes", "lubridate")
+install.packages( "ggplot2", "dplyr", "ggthemes", "lubridate", "tidyr")
 ```

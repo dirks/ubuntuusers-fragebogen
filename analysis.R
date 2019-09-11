@@ -2,6 +2,7 @@ library(ggplot2)
 library(dplyr)
 library(ggthemes)
 library(lubridate)
+library(tidyr)
 
 data_file <- 'bereinigt.csv'
 questionary <- read.csv(data_file)
