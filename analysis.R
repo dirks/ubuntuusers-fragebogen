@@ -7,14 +7,21 @@ library(tidyr)
 data_file <- 'bereinigt.csv'
 questionary <- read.csv(data_file)
 
-questionary %>%
-  group_by(Geschlecht) %>%
-  tally() %>%
-  mutate(percent = round(100 * (n / sum(n)), 1))
+plot_multicolumn <- function(variable, title) {
+  variable <- enquo(variable)
 
-questionary %>%
-  ggplot(aes(x = Alter, fill = Geschlecht)) +
-  geom_histogram(bins = 10)
+  questionary %>%
+    separate_rows(col = !! variable, sep = ";") %>%
+    mutate(variable = ifelse(!! variable == "", "keine Angabe", !! variable)) %>%
+    group_by(variable) %>%
+    tally() %>%
+    ggplot(aes(x = reorder(variable, n), y = n)) +
+    geom_col(fill = "orange") +
+    xlab("") +
+    coord_flip() +
+    theme_tufte() +
+    ggtitle(title)
+}
 
 # linux was released in 1991, questionary was 2019
 # adding a year for really early birds
@@ -25,28 +32,5 @@ questionary %>%
   geom_histogram(bins = 10)
 
 
-# Private Nutzung
-questionary %>%
-  separate_rows(col = Private.Nutzung, sep = ";") %>%
-  mutate(Private.Nutzung = ifelse(Private.Nutzung == "", "keine Angabe", Private.Nutzung)) %>%
-  group_by(Private.Nutzung) %>%
-  tally() %>%
-  ggplot(aes(x = reorder(Private.Nutzung, n), y = n)) +
-  geom_col(fill = "orange") +
-  xlab("") +
-  coord_flip() +
-  theme_tufte() +
-  ggtitle("Private Nutzung")
-
-# Berufliche Nutzung
-questionary %>%
-  separate_rows(col = Berufliche.Nutzung, sep = ";") %>%
-  mutate(Berufliche.Nutzung = ifelse(Berufliche.Nutzung == "", "keine Angabe", Berufliche.Nutzung)) %>%
-  group_by(Berufliche.Nutzung) %>%
-  tally() %>%
-  ggplot(aes(x = reorder(Berufliche.Nutzung, n), y = n)) +
-  geom_col(fill = "orange") +
-  xlab("") +
-  coord_flip() +
-  theme_tufte() +
-  ggtitle("Berufliche Nutzung")
+plot_multicolumn(Private.Nutzung, "Private Nutzung")
+plot_multicolumn(Berufliche.Nutzung, "Berufliche Nutzung")
