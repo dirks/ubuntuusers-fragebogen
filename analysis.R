@@ -37,3 +37,6 @@ questionary %>%
 
 plot_multicolumn(Private.Nutzung, "Private Nutzung")
 plot_multicolumn(Berufliche.Nutzung, "Berufliche Nutzung")
+plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.sehr.oft., "Welche Bereiche von ubuntuusers.de nutzt du sehr oft?")
+plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.gelegentlich., "Welche Bereiche von ubuntuusers.de nutzt du gelegentlich?")
+plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.nie., "Welche Bereiche von ubuntuusers.de nutzt du nie?")
