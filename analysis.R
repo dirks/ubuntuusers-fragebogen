@@ -32,10 +32,12 @@ frequency_table <- function(variable) {
     mutate(percent = round(100 * (n / sum(n)), 1))
 }
 
+# Alter
 questionary %>%
   ggplot(aes(x = Alter, fill = Geschlecht)) +
   geom_histogram(bins = 10)
 
+# Nutzungsdauer
 # linux was released in 1991, questionary was 2019
 # adding a year for really early birds
 max_usage_years <- 2019 - 1991 + 1
