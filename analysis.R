@@ -35,7 +35,8 @@ frequency_table <- function(variable) {
 # Alter
 questionary %>%
   ggplot(aes(x = Alter, fill = Geschlecht)) +
-  geom_histogram(bins = 10)
+  geom_histogram(bins = 10) +
+  theme_tufte()
 
 # Nutzungsdauer
 # linux was released in 1991, questionary was 2019
@@ -44,7 +45,8 @@ max_usage_years <- 2019 - 1991 + 1
 questionary %>%
   filter(Dauer.der.Nutzung.von.Linux < max_usage_years) %>%
   ggplot(aes(x = Dauer.der.Nutzung.von.Linux, fill = Altersgruppe)) +
-  geom_histogram(bins = 10)
+  geom_histogram(bins = 10) +
+  theme_tufte()
 
 # one selection per question
 frequency_table(Geschlecht)
