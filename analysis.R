@@ -26,11 +26,28 @@ plot_multicolumn <- function(variable, title) {
 frequency_table <- function(variable) {
   variable <- enquo(variable)
 
-    questionary %>%
+  questionary %>%
+    mutate(!! variable := as.character(!! variable)) %>%
+    mutate(!! variable := ifelse(!! variable == '', 'keine Angabe', !! variable)) %>%
     group_by(!! variable) %>%
     tally() %>%
     mutate(percent = round(100 * (n / sum(n)), 1))
 }
+
+plot_frequency <- function(variable, title) {
+  variable <- enquo(variable)
+
+  frequency_table(!! variable) %>%
+    ggplot(aes(x = reorder(!! variable, percent), y = percent)) +
+    geom_col(fill = 'orange') +
+    #coord_polar('y', start = 0) +
+    coord_flip() +
+    theme_tufte() +
+    #labs(fill = '') +
+    xlab('') +
+    ggtitle(title)
+  }
+
 
 # Alter
 questionary %>%
@@ -58,6 +75,19 @@ frequency_table(Wie.bewertest.du.Entscheidungen.des.Teams..z..B..Moderationsents
 frequency_table(Wie.finanziert.sich.ubuntuusers.de.deiner.Meinung.nach.)
 frequency_table(Welche.Verbindung.hat.ubuntuusers.de.zu.Canonical.)
 frequency_table(Wer.ist.im.Team.von.ubuntuusers.de.)
+
+# plot one selection numbers
+plot_frequency(Geschlecht, 'Geschlecht')
+plot_frequency(Grund.für.Anmeldung, 'Grund für Anmeldung')
+plot_frequency(Worüber.erfolgte.der.Einstieg.bei.ubuntuusers.de., 'Worüber erfolgte der Einstieg bei ubuntuusers.de')
+plot_frequency(Wie.bewertest.du.den.optischen.Auftritt.von.ubuntuusers.de., 'Wie bewertest du den optischen Auftritt von ubuntuusers.de')
+plot_frequency(Wie.bewertest.du.den.Funktionsumfang.und.die.Bedienung.der.Plattform., 'Wie bewertest du den Funktionsumfang und die Bedienung der Plattform')
+plot_frequency(Wie.bewertest.du.Entscheidungen.des.Teams..z..B..Moderationsentscheidungen.oder.Anforderungen.des.Wikiteams.., 'Wie bewertest du Entscheidungen des Teams, z.B. Moderationsentscheidungen oder Anforderungen des Wikiteams')
+plot_frequency(Wie.finanziert.sich.ubuntuusers.de.deiner.Meinung.nach., 'Wie finanziert sich ubuntuusers.de deiner Meinung nach')
+plot_frequency(Welche.Verbindung.hat.ubuntuusers.de.zu.Canonical., 'Welche Verbindung hat ubuntuusers.de zu Canonical')
+plot_frequency(Wer.ist.im.Team.von.ubuntuusers.de., 'Wer ist im Team von ubuntuusers.de')
+
+
 
 # multiple selections per question
 plot_multicolumn(Private.Nutzung, 'Private Nutzung')
