@@ -12,10 +12,10 @@ plot_multicolumn <- function(variable, title) {
 
   questionary %>%
     separate_rows(col = !! variable, sep = ";") %>%
-    mutate(variable = ifelse(!! variable == "", "keine Angabe", !! variable)) %>%
-    group_by(variable) %>%
+    mutate(!! variable := ifelse(!! variable == "", "keine Angabe", !! variable)) %>%
+    group_by(!!variable) %>%
     tally() %>%
-    ggplot(aes(x = reorder(variable, n), y = n)) +
+    ggplot(aes(x = reorder(!! variable, n), y = n)) +
     geom_col(fill = "orange") +
     xlab("") +
     coord_flip() +
