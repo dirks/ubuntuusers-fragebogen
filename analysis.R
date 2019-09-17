@@ -11,13 +11,13 @@ plot_multicolumn <- function(variable, title) {
   variable <- enquo(variable)
 
   questionary %>%
-    separate_rows(col = !! variable, sep = ";") %>%
-    mutate(!! variable := ifelse(!! variable == "", "keine Angabe", !! variable)) %>%
+    separate_rows(col = !! variable, sep = ';') %>%
+    mutate(!! variable := ifelse(!! variable == '', 'keine Angabe', !! variable)) %>%
     group_by(!!variable) %>%
     tally() %>%
     ggplot(aes(x = reorder(!! variable, n), y = n)) +
-    geom_col(fill = "orange") +
-    xlab("") +
+    geom_col(fill = 'orange') +
+    xlab('') +
     coord_flip() +
     theme_tufte() +
     ggtitle(title)
@@ -60,8 +60,8 @@ frequency_table(Welche.Verbindung.hat.ubuntuusers.de.zu.Canonical.)
 frequency_table(Wer.ist.im.Team.von.ubuntuusers.de.)
 
 # multiple selections per question
-plot_multicolumn(Private.Nutzung, "Private Nutzung")
-plot_multicolumn(Berufliche.Nutzung, "Berufliche Nutzung")
-plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.sehr.oft., "Welche Bereiche von ubuntuusers.de nutzt du sehr oft?")
-plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.gelegentlich., "Welche Bereiche von ubuntuusers.de nutzt du gelegentlich?")
-plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.nie., "Welche Bereiche von ubuntuusers.de nutzt du nie?")
+plot_multicolumn(Private.Nutzung, 'Private Nutzung')
+plot_multicolumn(Berufliche.Nutzung, 'Berufliche Nutzung')
+plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.sehr.oft., 'Welche Bereiche von ubuntuusers.de nutzt du sehr oft?')
+plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.gelegentlich., 'Welche Bereiche von ubuntuusers.de nutzt du gelegentlich?')
+plot_multicolumn(Welche.Bereiche.von.ubuntuusers.de.nutzt.du.nie., 'Welche Bereiche von ubuntuusers.de nutzt du nie?')
